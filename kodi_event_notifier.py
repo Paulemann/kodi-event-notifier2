@@ -2,8 +2,16 @@
 # -*- coding: utf-8 -*-
 
 #
-# Install opencv with;
-# pip3 install opencv-python
+# Install opencv:
+#   pip3 install opencv-python
+#
+# -> Update: 
+#   Please use:
+#     [sudo] pip3 install opencv-contrib-python==4.1.0.25
+#   instead
+#
+# Intall imutils:
+#   [sudo] pip3 install imutils
 #
 
 import time
@@ -45,23 +53,41 @@ _max_waittime_ = 10
 _padding_ = ' ' * 11
 
 # Pretrained classes in the model
-classNames = {0: 'Background',
-              1: 'Person', 2: 'Bicycle', 3: 'Car', 4: 'Motorcycle', 5: 'Airplane', 6: 'Bus',
-              7: 'Train', 8: 'Truck', 9: 'Boat', 10: 'Traffic light', 11: 'Fire Hydrant',
-              13: 'Stop Sign', 14: 'Parking Meter', 15: 'Bench', 16: 'Bird', 17: 'Cat',
-              18: 'Dog', 19: 'Horse', 20: 'Sheep', 21: 'Cow', 22: 'Elephant', 23: 'Bear',
-              24: 'Zebra', 25: 'Giraffe', 27: 'Backpack', 28: 'Umbrella', 31: 'Handbag',
-              32: 'Tie', 33: 'Suitcase', 34: 'Frisbee', 35: 'Skis', 36: 'Snowboard',
-              37: 'Sports Ball', 38: 'Kite', 39: 'Baseball Bat', 40: 'Baseball Glove',
-              41: 'Skateboard', 42: 'Surfboard', 43: 'Tennis Racket', 44: 'Bottle',
-              46: 'Wine Glass', 47: 'Cup', 48: 'Fork', 49: 'Knife', 50: 'Spoon',
-              51: 'Bowl', 52: 'Banana', 53: 'Apple', 54: 'Sandwich', 55: 'Orange',
-              56: 'Broccoli', 57: 'Carrot', 58: 'Hot Dog', 59: 'Pizza', 60: 'Donut',
-              61: 'Cake', 62: 'Chair', 63: 'Couch', 64: 'Potted Plant', 65: 'Bed',
-              67: 'Dining Table', 70: 'Toilet', 72: 'TV', 73: 'Laptop', 74: 'Mouse',
-              75: 'Remote', 76: 'Keyboard', 77: 'Cell Phone', 78: 'Microwave', 79: 'Oven',
-              80: 'Toaster', 81: 'Sink', 82: 'Refrigerator', 84: 'Book', 85: 'Clock',
-              86: 'Vase', 87: 'Scissors', 88: 'Teddy Bear', 89: 'Hair Drier', 90: 'Toothbrush'}
+#classNames = {0: 'Background',
+#              1: 'Person', 2: 'Bicycle', 3: 'Car', 4: 'Motorcycle', 5: 'Airplane', 6: 'Bus',
+#              7: 'Train', 8: 'Truck', 9: 'Boat', 10: 'Traffic light', 11: 'Fire Hydrant',
+#              13: 'Stop Sign', 14: 'Parking Meter', 15: 'Bench', 16: 'Bird', 17: 'Cat',
+#              18: 'Dog', 19: 'Horse', 20: 'Sheep', 21: 'Cow', 22: 'Elephant', 23: 'Bear',
+#              24: 'Zebra', 25: 'Giraffe', 27: 'Backpack', 28: 'Umbrella', 31: 'Handbag',
+#              32: 'Tie', 33: 'Suitcase', 34: 'Frisbee', 35: 'Skis', 36: 'Snowboard',
+#              37: 'Sports Ball', 38: 'Kite', 39: 'Baseball Bat', 40: 'Baseball Glove',
+#              41: 'Skateboard', 42: 'Surfboard', 43: 'Tennis Racket', 44: 'Bottle',
+#              46: 'Wine Glass', 47: 'Cup', 48: 'Fork', 49: 'Knife', 50: 'Spoon',
+#              51: 'Bowl', 52: 'Banana', 53: 'Apple', 54: 'Sandwich', 55: 'Orange',
+#              56: 'Broccoli', 57: 'Carrot', 58: 'Hot Dog', 59: 'Pizza', 60: 'Donut',
+#              61: 'Cake', 62: 'Chair', 63: 'Couch', 64: 'Potted Plant', 65: 'Bed',
+#              67: 'Dining Table', 70: 'Toilet', 72: 'TV', 73: 'Laptop', 74: 'Mouse',
+#              75: 'Remote', 76: 'Keyboard', 77: 'Cell Phone', 78: 'Microwave', 79: 'Oven',
+#              80: 'Toaster', 81: 'Sink', 82: 'Refrigerator', 84: 'Book', 85: 'Clock',
+#              86: 'Vase', 87: 'Scissors', 88: 'Teddy Bear', 89: 'Hair Drier', 90: 'Toothbrush'}
+
+classNames = {0: 'Hintergrund',
+              1: 'Person', 2: 'Fahhrad', 3: 'Auto', 4: 'Motorrad', 5: 'Flugzeug', 6: 'Bus',
+              7: 'Zug', 8: 'Lastwagen', 9: 'Boot', 10: 'Ampel', 11: 'Hydrant',
+              13: 'Stoppschild', 14: 'Parkuhr', 15: 'Bank', 16: 'Vogel', 17: 'Katze',
+              18: 'Hund', 19: 'Pferd', 20: 'Schaaf', 21: 'Kuh', 22: 'Elefant', 23: 'Bär',
+              24: 'Zebra', 25: 'Giraffe', 27: 'Rucksack', 28: 'Schirm', 31: 'Handtasche',
+              32: 'Krawatte', 33: 'Koffer', 34: 'Frisbee', 35: 'Skier', 36: 'Snowboard',
+              37: 'Ball', 38: 'Drachen', 39: 'Baseballschläger', 40: 'Baseballhandschuhe',
+              41: 'Skateboard', 42: 'Surfboard', 43: 'Tennisschläger', 44: 'Flasche',
+              46: 'Weinglas', 47: 'Tasse', 48: 'Gabel', 49: 'Messer', 50: 'Löffel',
+              51: 'Schale', 52: 'Banane', 53: 'Apfel', 54: 'Sandwich', 55: 'Orange',
+              56: 'Broccoli', 57: 'Karrotte', 58: 'Hot Dog', 59: 'Pizza', 60: 'Donut',
+              61: 'Kuchen', 62: 'Stuhl', 63: 'Sofa', 64: 'Topfpflanze', 65: 'Bett',
+              67: 'Esstisch', 70: 'Toilette', 72: 'TV', 73: 'Laptop', 74: 'Computermaus',
+              75: 'Fernbedienung', 76: 'Tastatur', 77: 'Mobiltelefon', 78: 'Microwelle', 79: 'Ofen',
+              80: 'Toaster', 81: 'Spüle', 82: 'Kühlschrank', 84: 'Buch', 85: 'Uhr',
+              86: 'Vase', 87: 'Schere', 88: 'Teddybär', 89: 'Haartrockner', 90: 'Zahnbürste'}
 
 matchObject = 'Person'
 
@@ -420,14 +446,14 @@ def send_msg(device_id, attachments=None):
     files = [(os.path.join(p, f), None) for f in sorted(os.listdir(p)) if os.path.isfile(os.path.join(p, f))]
     log('Found {} file(s) to attach.'.format(len(files)), level='DEBUG')
   elif files:
-    log('Forwarding {} attachment(s) from original message ...'.format(len(files)), level='DEBUG')
+    log('Using {} attachment(s) from original message ...'.format(len(files)), level='DEBUG')
 
   if len(_device_croparea_) > device_index:
     (cropX, cropY, cropW, cropH) = _device_croparea_[device_index]
   else:
     (cropX, cropY, cropW, cropH) = (0, 0, 0, 0)
 
-  log('Sending message via {} ...'.format(_smtp_server_), level='DEBUG')
+  log('Preparing to forward message via {} ...'.format(_smtp_server_), level='DEBUG')
 
   msg = MIMEMultipart()
 
@@ -592,6 +618,7 @@ class MySMTPChannel(SMTPChannel):
   credential_validator = FakeCredentialValidator
 
   def __init__(self, server, conn, addr, *args, **kwargs):
+    #kwargs['decode_data'] = True
     super().__init__(server, conn, addr, *args, **kwargs)
     self.username = None
     self.password = None
@@ -755,9 +782,16 @@ class MySMTPChannel(SMTPChannel):
 class MySMTPServer(SMTPServer):
   channel_class = MySMTPChannel
 
-  def process_message(self, peer, mailfrom, rcpttos, data):
+  ## Whatever is given as argument, set decode_data=True unconditionally:
+  #def __init__(self, localaddr, remoteaddr, *args, **kwargs):
+  #   kwargs['decode_data'] = True
+  #   super().__init__(localaddr, remoteaddr, *args, **kwargs)
+
+  #def process_message(self, peer, mailfrom, rcpttos, data, mail_options=None, rcpt_options=None):
+  def process_message(self, peer, mailfrom, rcpttos, data, **kwargs):
     global _mail_to_, _mail_subject_
 
+    #log('Decode Data: {}'.format(self._decode_data), level='DEBUG')
     try:
       #Implement additional security checks here: e.g. filter on mailfrom and/or addr.
       addr, port = peer
@@ -765,8 +799,16 @@ class MySMTPServer(SMTPServer):
       log('Message sent from:      {}'.format(mailfrom))
       log('Message addressed to:   {}'.format(', '.join(rcpttos)))
 
-      msg = email.message_from_string(data)
+      mailbody = ''
       subject = ''
+      text_parts = []
+      attachments = []
+
+      # Attention: If decode_data is not set True, process_message's data type is byte
+      if not self._decode_data:
+        msg = email.message_from_string(data.decode('utf-8'))
+      else:
+        msg = email.message_from_string(data)
       for encoded_string, charset in decode_header(msg.get('Subject')):
         try:
           if charset is not None:
@@ -784,9 +826,6 @@ class MySMTPServer(SMTPServer):
 
       headers = '\n'.join((_padding_ + str(key) + ': ' + str(val)) for key, val in msg.items())
       log('Message headers:\n' + headers, level='DEBUG')
-
-      text_parts = []
-      attachments = []
 
       # loop on the email parts
       for part in msg.walk():
@@ -972,6 +1011,7 @@ if __name__ == '__main__':
   # Start the smtp server on port _event_port_
   if not port_is_used(_local_port_):
     log('Listening for event messages on port: {} ...'.format(_local_port_))
+    #smtp_server = MySMTPServer(('0.0.0.0', _local_port_), None, decode_data=True)
     smtp_server = MySMTPServer(('0.0.0.0', _local_port_), None)
   else:
     log('Port {} is already in use.'.format(_local_port_), level='ERROR')
